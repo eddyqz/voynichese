@@ -9,10 +9,19 @@ import argparse
 import sys
 import math
 
+import get_word_language
+
 path = "models/voynich.bin"
 model = fasttext.load_model(path)
 
 words = list(model.words)
+
+# print(words)
+# from this print statement, it was discovered that the first "word"
+# in words is '</s>' which is not an actual word. Thus, it must be removed
+words = words[1:len(words)]
+# print(words)
+
 vectors = np.array([model[w] for w in words])
 
 mag = npla.norm(vectors, axis=1)[:,None] * npla.norm(vectors, axis=1)
@@ -52,7 +61,21 @@ def annotate(image, words, n=float("inf")):
 tsne = TSNE(n_components=2, metric='cosine')
 image = tsne.fit_transform(vectors)
 
-plt.scatter(*zip(*image), c="r", marker='.')
+#####################################
+# plotting code
+color = {
+	'A': 'red',
+	'B': 'blue',
+	'X': 'grey'
+}
+
+
+# plt.scatter(*zip(*image), c="r", marker='.')
+# This line below is meant to do the same plot as the line above but with colors
+# for language A, B, and X (unknown language)
+# keep in mind that get_word_language.find_language() returns a list, so pick
+# one element from the list
+plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i)[0]] for i in words], s = 5)
 
 coords = dict(zip(words, image))
 
@@ -66,3 +89,6 @@ plt.title('Voynich Word Embeddings')
 # annotate(image, words)
 
 plt.show()
+
+
+#####################################
