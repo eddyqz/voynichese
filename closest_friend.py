@@ -56,10 +56,10 @@ plt.scatter(*zip(*image), c="r", marker='.')
 
 coords = dict(zip(words, image))
 
-for w in word_dist:
-	a = coords[w[0]]
-	b = coords[w[1]]
-	plt.plot((a[0], b[0]), (a[1], b[1]), alpha=0.3)
+# for w in word_dist:
+# 	a = coords[w[0]]
+# 	b = coords[w[1]]
+# 	plt.plot((a[0], b[0]), (a[1], b[1]), alpha=0.3)
 
 plt.title('Voynich Word Embeddings')
 
