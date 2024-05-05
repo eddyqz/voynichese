@@ -18,6 +18,7 @@ import sys
 
 from section_labels import *
 from lang_labels import *
+from random_sample import get_random_dialect_sample
 
 def term_freq(term, page):
 	# raw count
@@ -50,7 +51,7 @@ def annotate(image, words, n=float("inf")):
 		)
 
 path = "models/voynich.bin"
-path = "models/voynich-3.vec"
+# path = "models/voynich-3.vec"
 model = fasttext.load_model(path)
 
 term_counts = defaultdict(Counter)
@@ -120,6 +121,7 @@ image = tsne.fit_transform(vectors)
 # 	'bath': 'cyan',
 # 	'text': 'grey'
 # }
+# plt.scatter(*zip(*image), c = [color[section_labels.get(i, 'X')] for i in pages])
 
 
 color = {
@@ -128,7 +130,11 @@ color = {
 	'X': 'grey'
 }
 
-plt.scatter(*zip(*image), c = [color[lang_labels.get(i, 'X')] for i in pages])
+# plt.scatter(*zip(*image), c = [color[lang_labels.get(i, 'X')] for i in pages])
+
+random_dialect_sample = get_random_dialect_sample()
+
+plt.scatter(*zip(*image), c = [color[random_dialect_sample.get(i, 'X')] for i in pages])
 
 plt.show()
 
