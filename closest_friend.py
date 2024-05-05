@@ -76,9 +76,8 @@ color = {
 
 # plt.scatter(*zip(*image), c="r", marker='.')
 # This line below is meant to do the same plot as the line above but with colors
-# for language A, B, and X (unknown language)
-# keep in mind that get_word_language.find_language() returns a list, so pick
-# one element from the list
+# for language A, B, X (unknown language), and Both for both (purple)
+
 # plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, lang_labels)] for i in words], s = 5)
 
 # Plotting randomly labeled languages
