@@ -78,6 +78,7 @@ def get_words(file, page_numbers=False):
 				r = [pg]
 				r.extend(words)
 				yield r
+# 				print(r)
 			else:
 				yield words
 
