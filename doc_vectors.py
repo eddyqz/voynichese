@@ -18,6 +18,7 @@ import sys
 
 from section_labels import *
 from lang_labels import *
+from scribe_labels import *
 from random_sample import get_random_dialect_sample
 
 def term_freq(term, page):
@@ -135,6 +136,17 @@ color = {
 random_dialect_sample = get_random_dialect_sample()
 
 plt.scatter(*zip(*image), c = [color[random_dialect_sample.get(i, 'X')] for i in pages])
+
+scribe_color = {
+	1: 'red',
+	2: 'yellow',
+	3: 'green',
+	4: 'blue',
+	5: 'purple',
+	"X": "grey"
+}
+plt.scatter(*zip(*image), c = [scribe_color[scribe_labels.get(i, 'X')] for i in pages])
+
 
 plt.show()
 

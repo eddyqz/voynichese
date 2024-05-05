@@ -63,8 +63,11 @@ for line in get_words(FILE, page_numbers=True):
 		
 		pass
 
+<<<<<<< HEAD:get_word_language.py
 # print(word_page_dict)
 
+=======
+>>>>>>> 548e290e0abd2d17947ac69213ee89a6965b8036:get_word_characteristics.py
 
 #####################################
 # actual function to find word's language
@@ -109,8 +112,75 @@ def find_language(word, lang_labels):
 	
 	return language
 
+
+
+def find_scribe(word, scribe_labels):
+	'''
 	
+
+	Parameters
+	----------
+	word : string
+		This is supposed to be a word from the EVA transcription of the VMS.
+
+	Returns
+	-------
+	scribe : string
+		This is the scribe who wrote the word is written in as 
+		determined by Davis.
+
+	'''
 	
+	scribe = ''
+	scribe_list = []
+	
+	for page in word_page_dict[word]:
+		if page in scribe_labels.keys():
+			if scribe_labels[page] not in scribe_labels:
+				scribe_list.append(scribe_labels[page])
+		else:
+			if 'X' not in scribe_list:
+				scribe_list.append('X')
+				
+	if len(scribe_list) == 1:
+		return scribe_list[0]
+
+	if (len(scribe_list) >=2 and 'X' not in scribe_list) or len(scribe_list) >= 3:
+		return "More"
+	if 1 in scribe_list:
+		return 1
+	if 2 in scribe_list:
+		return 2
+	if 3 in scribe_list:
+		return 3
+	if 4 in scribe_list:
+		return 4
+	if 5 in scribe_list:
+		return 5
+
+def did_scribe_write_word(word, scribe_labels, scribe_number):
+	'''
+	
+
+	Parameters
+	----------
+	word : string
+		This is supposed to be a word from the EVA transcription of the VMS.
+	scribe_number: integer
+		This the number of the scribe.
+
+	Returns
+	-------
+	scribe_bool : boolean
+		Returns True if scribe has written word, otherwise false.
+
+	'''
+		
+	for page in word_page_dict[word]:
+		if page in scribe_labels.keys():
+			if scribe_labels[page] == scribe_number:
+				return True
+	return False
 
 
 
