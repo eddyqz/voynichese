@@ -66,7 +66,8 @@ image = tsne.fit_transform(vectors)
 color = {
 	'A': 'red',
 	'B': 'blue',
-	'X': 'grey'
+	'X': 'grey',
+	'Both': 'purple'
 }
 
 
@@ -75,7 +76,7 @@ color = {
 # for language A, B, and X (unknown language)
 # keep in mind that get_word_language.find_language() returns a list, so pick
 # one element from the list
-plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i)[0]] for i in words], s = 5)
+plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i)] for i in words], s = 5)
 
 coords = dict(zip(words, image))
 

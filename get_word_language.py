@@ -362,15 +362,26 @@ def find_language(word):
 
 	'''
 	
-	language = []
+	language = ''
+	language_list = []
 	
 	for page in word_page_dict[word]:
 		if page in lang_labels.keys():
-			if lang_labels[page] not in language:
-				language.append(lang_labels[page])
+			if lang_labels[page] not in language_list:
+				language_list.append(lang_labels[page])
 		else:
-			if 'X' not in language:
-				language.append('X')
+			if 'X' not in language_list:
+				language_list.append('X')
+				
+	if len(language_list) == 1:
+		language = language_list[0]
+	else:
+		if 'A' in language_list and 'B' in language_list:
+			language = 'Both'
+		elif 'A' in language_list:
+			language = 'A'
+		elif 'B' in language_list:
+			language= 'B'
 	
 	return language
 
