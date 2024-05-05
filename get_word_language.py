@@ -65,7 +65,7 @@ for line in get_words(FILE, page_numbers=True):
 		
 		pass
 
-print(word_page_dict)
+# print(word_page_dict)
 
 
 #####################################
