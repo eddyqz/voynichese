@@ -9,9 +9,10 @@ import argparse
 import sys
 import math
 
-import get_word_language
+from get_word_characteristics import find_language, find_scribe, did_scribe_write_word
 
 from lang_labels import *
+from scribe_labels import *
 from random_sample import get_random_dialect_sample
 
 path = "models/voynich.bin"
@@ -79,13 +80,35 @@ color = {
 # for language A, B, and X (unknown language)
 # keep in mind that get_word_language.find_language() returns a list, so pick
 # one element from the list
-# plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, lang_labels)] for i in words], s = 5)
+# plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
 
 # Plotting randomly labeled languages
-random_dialect_sample = get_random_dialect_sample()
-plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, random_dialect_sample)] for i in words], s = 5)
+# random_dialect_sample = get_random_dialect_sample()
+# plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, random_dialect_sample)] for i in words], s = 5)
 
+# Plotting scribes
 
+# scribe_color = {
+# 	1: 'red',
+# 	2: 'yellow',
+# 	3: 'green',
+# 	4: 'blue',
+# 	5: "purple",
+# 	"More": "white",
+# 	'X': "grey"
+# }
+# plt.scatter(*zip(*image), c = [scribe_color[find_scribe(i, scribe_labels)] for i in words], s = 5, edgecolors="black")
+
+# Plotting scribes better
+scribe_color = {
+	True: 0.25,
+	False: 0
+}
+plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 1)] for i in words], s = 5, c = "red")
+plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 2)] for i in words], s = 5, c = "yellow")
+plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 3)] for i in words], s = 5, c = "green")
+plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 4)] for i in words], s = 5, c = "blue")
+plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 5)] for i in words], s = 5, c = "purple")
 
 # coords = dict(zip(words, image))
 
