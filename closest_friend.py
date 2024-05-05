@@ -11,6 +11,9 @@ import math
 
 import get_word_language
 
+from lang_labels import *
+from random_sample import get_random_dialect_sample
+
 path = "models/voynich.bin"
 model = fasttext.load_model(path)
 
@@ -76,9 +79,15 @@ color = {
 # for language A, B, and X (unknown language)
 # keep in mind that get_word_language.find_language() returns a list, so pick
 # one element from the list
-plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i)] for i in words], s = 5)
+# plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, lang_labels)] for i in words], s = 5)
 
-coords = dict(zip(words, image))
+# Plotting randomly labeled languages
+random_dialect_sample = get_random_dialect_sample()
+plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, random_dialect_sample)] for i in words], s = 5)
+
+
+
+# coords = dict(zip(words, image))
 
 # for w in word_dist:
 # 	a = coords[w[0]]

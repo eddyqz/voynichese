@@ -18,8 +18,6 @@ Note on how to use this file:
 
 FILE = "text16e6.evt"
 
-from lang_labels import * 
-
 #####################################
 # helper function
 
@@ -68,7 +66,7 @@ for line in get_words(FILE, page_numbers=True):
 #####################################
 # actual function to find word's language
 
-def find_language(word):
+def find_language(word, lang_labels):
 	'''
 	
 
