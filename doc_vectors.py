@@ -131,12 +131,12 @@ lang_color = {
 	'X': 'grey'
 }
 
-plt.scatter(*zip(*image), c = [lang_color[lang_labels.get(i, 'X')] for i in pages])
+# plt.scatter(*zip(*image), c = [lang_color[lang_labels.get(i, 'X')] for i in pages])
 
-random_dialect_sample = get_random_dialect_sample()
-
-# plt.scatter(*zip(*image), c = [color[random_dialect_sample.get(i, 'X')] for i in pages])
-
+# random_dialect_sample = get_random_dialect_sample()
+print('hello')
+# plt.scatter(*zip(*image), c = [lang_color[random_dialect_sample.get(i, 'X')] for i in pages])
+print('hello')
 scribe_color = {
 	1: 'red',
 	2: 'yellow',
@@ -145,7 +145,7 @@ scribe_color = {
 	5: 'purple',
 	"X": "grey"
 }
-# plt.scatter(*zip(*image), c = [scribe_color[scribe_labels.get(i, 'X')] for i in pages])
+plt.scatter(*zip(*image), c = [scribe_color[scribe_labels.get(i, 'X')] for i in pages])
 
 
 plt.show()

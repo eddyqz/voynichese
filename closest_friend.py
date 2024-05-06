@@ -9,12 +9,12 @@ import argparse
 import sys
 import math
 
-<<<<<<< HEAD
+
 from get_word_characteristics import find_language, find_scribe, did_scribe_write_word
 import vms_tokenize
-=======
+
 from get_word_characteristics import find_language, find_scribe, did_scribe_write_word, is_word_in_topic, get_scribe_count, find_topic
->>>>>>> 6fd57d2498e5a94a3c186a37ce4e73ac8980a1b6
+
 
 from lang_labels import *
 from scribe_labels import *
@@ -92,37 +92,39 @@ color = {
 # for language A, B, and X (unknown language)
 # keep in mind that get_word_language.find_language() returns a list, so pick
 # one element from the list
-plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
+# plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
 
 
 # Plotting randomly labeled languages
 # random_dialect_sample = get_random_dialect_sample()
-# plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, random_dialect_sample)] for i in words], s = 5)
+# plt.scatter(*zip(*image), c = [color[find_language(i, random_dialect_sample)] for i in words], s = 5)
 
 # Plotting scribes
 
 # scribe_color = {
-# 	1: 'red',
-# 	2: 'yellow',
-# 	3: 'green',
-# 	4: 'blue',
-# 	5: "purple",
-# 	"More": "white",
-# 	'X': "grey"
+#  	1: 'red',
+#  	2: 'yellow',
+#  	3: 'green',
+#  	4: 'blue',
+#  	5: "purple",
+#  	"More": "white",
+#  	'X': "grey"
 # }
 # scribe_color_data = [scribe_color[find_scribe(i, scribe_labels)] for i in words]
 # plt.scatter(*zip(*image), c = scribe_color_data, 
-# 			s = 15, 
-# 			edgecolors=["black" if color=="white" or color=="grey" else color for color in scribe_color_data], 
-# 			linewidths=1, 
-# 			alpha=[0.05 if data=="white" or data=="grey" else 1 for data in scribe_color_data])
+#  			s = 15, 
+#  			edgecolors=["black" if color=="white" or color=="grey" else color for color in scribe_color_data], 
+#  			linewidths=1, 
+#  			alpha=[0.05 if data=="white" or data=="grey" else 1 for data in scribe_color_data])
 
 # Plotting scribes better
 
-# scribe_color = {
-# 	True: 0.25,
-# 	False: 0
-# }
+scribe_color = {
+ 	True: 0.25,
+ 	False: 0.0
+}
+
+
 # plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 1)] for i in words], s = 5, c = "red")
 # plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 2)] for i in words], s = 5, c = "yellow")
 # plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 3)] for i in words], s = 5, c = "green")
@@ -182,13 +184,13 @@ visibility = {
 # we can already access the words and their counts using this w, v in vms_tokenize format
 # we want wc as a dict so we can use it in the plt.scatter statement below
 wc_as_dict = {w:v for w, v in vms_tokenize.wc.most_common()}
-print(wc_as_dict)
-print(type(wc_as_dict))
+# print(wc_as_dict)
+# print(type(wc_as_dict))
 
-plt.scatter(*zip(*image), c = [math.log(wc_as_dict[word]) for word in words], s = 5, cmap = 'Blues', linewidths=5)
+plt.scatter(*zip(*image), c = [math.log(wc_as_dict[word]) for word in words], s = 5, cmap = 'Reds', linewidths=1)
 
 
-plt.title('Voynich Word Embeddings')
+# plt.title('Voynich Word Embeddings')
 
 # annotate(image, words)
 
