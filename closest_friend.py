@@ -9,11 +9,16 @@ import argparse
 import sys
 import math
 
+<<<<<<< HEAD
 from get_word_characteristics import find_language, find_scribe, did_scribe_write_word
 import vms_tokenize
+=======
+from get_word_characteristics import find_language, find_scribe, did_scribe_write_word, is_word_in_topic, get_scribe_count, find_topic
+>>>>>>> 6fd57d2498e5a94a3c186a37ce4e73ac8980a1b6
 
 from lang_labels import *
 from scribe_labels import *
+from section_labels import *
 from random_sample import get_random_dialect_sample
 
 path = "models/voynich.bin"
@@ -38,7 +43,6 @@ indices = np.flip(np.argsort(sims, axis=1), axis=1)[:,:1]
 
 word_dist = []
 for i, w in enumerate(words):
-	# L = [(w.encode('utf-8'), words[j].encode('utf-8'), math.acos(sims[i, j])) for j in indices[i, :]]
 	L = [(w, words[j], math.acos(sims[i, j])) for j in indices[i, :]]
 	word_dist.extend(L)
 	# print w
@@ -48,7 +52,8 @@ for i, w in enumerate(words):
 word_dist.sort(key = lambda x: x[2])
 
 # for w in word_dist:
-# 	print w[0], "&", w[1], "\\\\" #\t", w[2]
+# 	print (w[0], "&", w[1],  "\t", w[2])
+
 
 def annotate(image, words, n=float("inf")):
 	annotation_list = []
@@ -77,6 +82,7 @@ color = {
 
 
 # plt.scatter(*zip(*image), c="r", marker='.')
+
 # This line below is meant to do the same plot as the line above but with colors
 
 # for language A, B, X (unknown language), and Both for both (purple)
@@ -86,7 +92,7 @@ color = {
 # for language A, B, and X (unknown language)
 # keep in mind that get_word_language.find_language() returns a list, so pick
 # one element from the list
-# plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
+plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
 
 
 # Plotting randomly labeled languages
@@ -104,9 +110,15 @@ color = {
 # 	"More": "white",
 # 	'X': "grey"
 # }
-# plt.scatter(*zip(*image), c = [scribe_color[find_scribe(i, scribe_labels)] for i in words], s = 5, edgecolors="black")
+# scribe_color_data = [scribe_color[find_scribe(i, scribe_labels)] for i in words]
+# plt.scatter(*zip(*image), c = scribe_color_data, 
+# 			s = 15, 
+# 			edgecolors=["black" if color=="white" or color=="grey" else color for color in scribe_color_data], 
+# 			linewidths=1, 
+# 			alpha=[0.05 if data=="white" or data=="grey" else 1 for data in scribe_color_data])
 
 # Plotting scribes better
+
 # scribe_color = {
 # 	True: 0.25,
 # 	False: 0
@@ -116,6 +128,46 @@ color = {
 # plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 3)] for i in words], s = 5, c = "green")
 # plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 4)] for i in words], s = 5, c = "blue")
 # plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 5)] for i in words], s = 5, c = "purple")
+
+visibility = {
+	True: 0.25,
+	False: 0
+}
+# plt.scatter(*zip(*image), alpha = [visibility[did_scribe_write_word(i, scribe_labels, 1)] for i in words], s = 5, c = "red")
+# plt.scatter(*zip(*image), alpha = [visibility[did_scribe_write_word(i, scribe_labels, 2)] for i in words], s = 5, c = "yellow")
+# plt.scatter(*zip(*image), alpha = [visibility[did_scribe_write_word(i, scribe_labels, 3)] for i in words], s = 5, c = "green")
+# plt.scatter(*zip(*image), alpha = [visibility[did_scribe_write_word(i, scribe_labels, 4)] for i in words], s = 5, c = "blue")
+# plt.scatter(*zip(*image), alpha = [visibility[did_scribe_write_word(i, scribe_labels, 5)] for i in words], s = 5, c = "purple")
+
+# Plotting number of scribes into the tranparency of the dot
+# plt.scatter(*zip(*image), alpha = [(get_scribe_count(i, scribe_labels)+1)/6 for i in words], s = 5, c = "black")
+
+
+# Plotting topic
+# topic_color = {
+# 	"astro": 'red',
+# 	"herbal": 'yellow',
+# 	"multiherbal": 'green',
+# 	"bath": 'blue',
+# 	"text": "purple",
+# 	"More": "white",
+# 	'X': "grey"
+# }
+# section_color_data = [topic_color[find_topic(i, section_labels)] for i in words]
+# plt.scatter(*zip(*image), c = section_color_data, 
+# 			s = 15, 
+# 			edgecolors=["black" if color=="white" or color=="grey" else color for color in section_color_data], 
+# 			linewidths=1, 
+# 			alpha=[0.05 if data=="white" or data=="grey" else 1 for data in section_color_data])
+
+
+# Plotting topic better
+# plt.scatter(*zip(*image), alpha = [visibility[is_word_in_topic(i, section_labels, "astro")] for i in words], s = 5, c = "red")
+# plt.scatter(*zip(*image), alpha = [visibility[is_word_in_topic(i, section_labels, "herbal")] for i in words], s = 5, c = "green")
+# plt.scatter(*zip(*image), alpha = [visibility[is_word_in_topic(i, section_labels, "multiherbal")] for i in words], s = 5, c = "lime")
+# plt.scatter(*zip(*image), alpha = [visibility[is_word_in_topic(i, section_labels, "bath")] for i in words], s = 5, c = "yellow")
+# plt.scatter(*zip(*image), alpha = [visibility[is_word_in_topic(i, section_labels, "text")] for i in words], s = 5, c = "black")
+
 
 # coords = dict(zip(words, image))
 
@@ -144,13 +196,5 @@ plt.show()
 
 
 #####################################
-
-
-print(find_language('okalar', lang_labels))
-print("okalar")
-print(find_language('chdal', lang_labels))
-print("chdal")
-print(find_language('chekchy', lang_labels))
-print(find_language('laiin', lang_labels))
 
 

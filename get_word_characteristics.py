@@ -129,12 +129,11 @@ def find_scribe(word, scribe_labels):
 
 	'''
 	
-	scribe = ''
 	scribe_list = []
 	
 	for page in word_page_dict[word]:
 		if page in scribe_labels.keys():
-			if scribe_labels[page] not in scribe_labels:
+			if scribe_labels[page] not in scribe_list:
 				scribe_list.append(scribe_labels[page])
 		else:
 			if 'X' not in scribe_list:
@@ -155,6 +154,34 @@ def find_scribe(word, scribe_labels):
 		return 4
 	if 5 in scribe_list:
 		return 5
+	
+def get_scribe_count(word, scribe_labels):
+	'''
+	
+
+	Parameters
+	----------
+	word : string
+		This is supposed to be a word from the EVA transcription of the VMS.
+
+	Returns
+	-------
+	scribes : integer
+		This is the number of scribe who wrote the word as 
+		determined by Davis.
+
+	'''
+	
+	scribe_list = []
+	
+	for page in word_page_dict[word]:
+		if page in scribe_labels.keys():
+			if scribe_labels[page] not in scribe_list:
+				scribe_list.append(scribe_labels[page])
+
+	return len(scribe_list)
+
+
 
 def did_scribe_write_word(word, scribe_labels, scribe_number):
 	'''
@@ -165,7 +192,7 @@ def did_scribe_write_word(word, scribe_labels, scribe_number):
 	word : string
 		This is supposed to be a word from the EVA transcription of the VMS.
 	scribe_number: integer
-		This the number of the scribe.
+		This is the number of the scribe.
 
 	Returns
 	-------
@@ -181,6 +208,73 @@ def did_scribe_write_word(word, scribe_labels, scribe_number):
 	return False
 
 
+def find_topic(word, topic_labels):
+	'''
+	
+
+	Parameters
+	----------
+	word : string
+		This is supposed to be a word from the EVA transcription of the VMS.
+
+	Returns
+	-------
+	topic : string
+		This is the topic of the word as 
+		determined by Davis.
+
+	'''
+	
+	topic_list = []
+	
+	for page in word_page_dict[word]:
+		if page in topic_labels.keys():
+			if topic_labels[page] not in topic_list:
+				topic_list.append(topic_labels[page])
+		else:
+			if 'X' not in topic_list:
+				topic_list.append('X')
+				
+	if len(topic_list) == 1:
+		return topic_list[0]
+
+	if (len(topic_list) >=2 and 'X' not in topic_list) or len(topic_list) >= 3:
+		return "More"
+	if "astro" in topic_list:
+		return "astro"
+	if "herbal" in topic_list:
+		return "herbal"
+	if "multiherbal" in topic_list:
+		return "multiherbal"
+	if "bath" in topic_list:
+		return "bath"
+	if "text" in topic_list:
+		return "text"
+
+def is_word_in_topic(word, topic_labels, topic):
+	'''
+	
+
+	Parameters
+	----------
+	word : string
+		This is supposed to be a word from the EVA transcription of the VMS.
+	topic: string
+		The topic.
+
+	Returns
+	-------
+	topic_bool : boolean
+		Returns True if the word is related to the topic (appears in a page
+		labeled as the topic), otherwise false.
+
+	'''
+		
+	for page in word_page_dict[word]:
+		if page in topic_labels.keys():
+			if topic_labels[page] == topic:
+				return True
+	return False
 
 
 
