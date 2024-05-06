@@ -63,11 +63,9 @@ for line in get_words(FILE, page_numbers=True):
 		
 		pass
 
-<<<<<<< HEAD:get_word_language.py
 # print(word_page_dict)
 
-=======
->>>>>>> 548e290e0abd2d17947ac69213ee89a6965b8036:get_word_characteristics.py
+
 
 #####################################
 # actual function to find word's language
@@ -181,6 +179,8 @@ def did_scribe_write_word(word, scribe_labels, scribe_number):
 			if scribe_labels[page] == scribe_number:
 				return True
 	return False
+
+
 
 
 

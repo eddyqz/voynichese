@@ -10,6 +10,7 @@ import sys
 import math
 
 from get_word_characteristics import find_language, find_scribe, did_scribe_write_word
+import vms_tokenize
 
 from lang_labels import *
 from scribe_labels import *
@@ -80,7 +81,7 @@ color = {
 
 # for language A, B, X (unknown language), and Both for both (purple)
 
-# plt.scatter(*zip(*image), c = [color[get_word_language.find_language(i, lang_labels)] for i in words], s = 5)
+# plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
 
 # for language A, B, and X (unknown language)
 # keep in mind that get_word_language.find_language() returns a list, so pick
@@ -106,15 +107,15 @@ color = {
 # plt.scatter(*zip(*image), c = [scribe_color[find_scribe(i, scribe_labels)] for i in words], s = 5, edgecolors="black")
 
 # Plotting scribes better
-scribe_color = {
-	True: 0.25,
-	False: 0
-}
-plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 1)] for i in words], s = 5, c = "red")
-plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 2)] for i in words], s = 5, c = "yellow")
-plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 3)] for i in words], s = 5, c = "green")
-plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 4)] for i in words], s = 5, c = "blue")
-plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 5)] for i in words], s = 5, c = "purple")
+# scribe_color = {
+# 	True: 0.25,
+# 	False: 0
+# }
+# plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 1)] for i in words], s = 5, c = "red")
+# plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 2)] for i in words], s = 5, c = "yellow")
+# plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 3)] for i in words], s = 5, c = "green")
+# plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 4)] for i in words], s = 5, c = "blue")
+# plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_labels, 5)] for i in words], s = 5, c = "purple")
 
 # coords = dict(zip(words, image))
 
@@ -122,6 +123,18 @@ plt.scatter(*zip(*image), alpha = [scribe_color[did_scribe_write_word(i, scribe_
 # 	a = coords[w[0]]
 # 	b = coords[w[1]]
 # 	plt.plot((a[0], b[0]), (a[1], b[1]), alpha=0.3)
+
+# Plotting word count across entire VMS (frequency)
+
+# recall that wc is a global Counter() object from vms_tokenize
+# we can already access the words and their counts using this w, v in vms_tokenize format
+# we want wc as a dict so we can use it in the plt.scatter statement below
+wc_as_dict = {w:v for w, v in vms_tokenize.wc.most_common()}
+print(wc_as_dict)
+print(type(wc_as_dict))
+
+plt.scatter(*zip(*image), c = [math.log(wc_as_dict[word]) for word in words], s = 5, cmap = 'Blues', linewidths=5)
+
 
 plt.title('Voynich Word Embeddings')
 

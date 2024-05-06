@@ -86,8 +86,9 @@ if __name__ == "__main__":
 	for line in get_words("text16e6.evt", page_numbers=True):
 		#print " ".join(line)
 		pass
-	for w, v in wc.most_common():
-		print (w, v)
+# 	tmp = {w:v for w, v in wc.most_common()}
+# 	print(tmp)
+# 	print(type(tmp))
 		# if w.endswith("aiin"):
 		# 	print w, v,
 		# 	k = w[:-4] + "ain"
@@ -95,7 +96,11 @@ if __name__ == "__main__":
 		# 		print "<=>", k, wc[k]
 		# 	else:
 		# 		print "NO MATCH"
+		
+	
+	
+	
 
-	print (sum(wc.values()))
+# 	print (sum(wc.values()))
 
-	print (len(wc), len([v for v in wc.values() if v > 4]))
+# 	print (len(wc), len([v for v in wc.values() if v > 4]))
