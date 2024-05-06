@@ -144,3 +144,13 @@ plt.show()
 
 
 #####################################
+
+
+print(find_language('okalar', lang_labels))
+print("okalar")
+print(find_language('chdal', lang_labels))
+print("chdal")
+print(find_language('chekchy', lang_labels))
+print(find_language('laiin', lang_labels))
+
+
