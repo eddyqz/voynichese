@@ -2,15 +2,12 @@
 """
 Created on Sat May  4 23:12:39 2024
 
-@author: eddyz
+@authors: eddyz and chris-yao
 
-The purpose of this code is to check what language (A, B, or unlabeled) a word
-in the VMS is. 
+The purpose of this code is to check what language (A, B, unlabeled, or both), 
+scribe (1 through 5 or multiple),
+and topic (astro, herbal, multiherbal, bath, text, or multiple) a word in the VMS is.
 
-Note on how to use this file:
-	Import this file into the file where you actually need the language of a word.
-	Then, simply use get_word_language.find_language(word) and plug in the word 
-	you want to find the language for.
 """
 
 #####################################
@@ -78,12 +75,15 @@ def find_language(word, lang_labels):
 	----------
 	word : string
 		This is supposed to be a word from the EVA transcription of the VMS.
+	lang_labels : dict
+		Dictionary where the keys are the folio numbers and the keys are the
+		language of the page
 
 	Returns
 	-------
 	language : string
-		This is the "language" the word is written in (A, B, or unclear) as 
-		determined by Currier.
+		This is the "language" the word is written in (A, B, Both, or X) as 
+		determined by Currier, where X is unclear.
 
 	'''
 	
@@ -110,7 +110,30 @@ def find_language(word, lang_labels):
 	
 	return language
 
+def is_word_in_language(word, lang_labels, lang):
+	"""
 
+	Parameters
+	----------
+	word : string
+		This is supposed to be a word from the EVA transcription of the VMS.
+	lang_labels : dict
+		Dictionary where the keys are the folio numbers and the keys are the
+		language of the page
+	lang: string
+		This is the language.
+
+	Returns
+	-------
+	lang_bool : boolean
+		Returns True if word is in language, otherwise false.
+	"""
+
+	for page in word_page_dict[word]:
+		if page in lang_labels.keys():
+			if lang_labels[page] == lang:
+				return True
+	return False
 
 def find_scribe(word, scribe_labels):
 	'''
@@ -120,6 +143,9 @@ def find_scribe(word, scribe_labels):
 	----------
 	word : string
 		This is supposed to be a word from the EVA transcription of the VMS.
+	scribe_labels : dict
+		Dictionary where the keys are the folio numbers and the keys are which
+		scribe wrote the page
 
 	Returns
 	-------
@@ -143,7 +169,7 @@ def find_scribe(word, scribe_labels):
 		return scribe_list[0]
 
 	if (len(scribe_list) >=2 and 'X' not in scribe_list) or len(scribe_list) >= 3:
-		return "More"
+		return "Multiple"
 	if 1 in scribe_list:
 		return 1
 	if 2 in scribe_list:
@@ -163,11 +189,14 @@ def get_scribe_count(word, scribe_labels):
 	----------
 	word : string
 		This is supposed to be a word from the EVA transcription of the VMS.
+	scribe_labels : dict
+		Dictionary where the keys are the folio numbers and the keys are which
+		scribe wrote the page
 
 	Returns
 	-------
 	scribes : integer
-		This is the number of scribe who wrote the word as 
+		This is the number of scribe who have written the word as 
 		determined by Davis.
 
 	'''
@@ -191,6 +220,9 @@ def did_scribe_write_word(word, scribe_labels, scribe_number):
 	----------
 	word : string
 		This is supposed to be a word from the EVA transcription of the VMS.
+	scribe_labels : dict
+		Dictionary where the keys are the folio numbers and the keys are which
+		scribe wrote the page
 	scribe_number: integer
 		This is the number of the scribe.
 
@@ -216,6 +248,9 @@ def find_topic(word, topic_labels):
 	----------
 	word : string
 		This is supposed to be a word from the EVA transcription of the VMS.
+	topic_labels : dict
+		Dictionary where the keys are the folio numbers and the keys are the topic
+		of the page
 
 	Returns
 	-------
@@ -239,7 +274,7 @@ def find_topic(word, topic_labels):
 		return topic_list[0]
 
 	if (len(topic_list) >=2 and 'X' not in topic_list) or len(topic_list) >= 3:
-		return "More"
+		return "multiple"
 	if "astro" in topic_list:
 		return "astro"
 	if "herbal" in topic_list:
@@ -259,8 +294,11 @@ def is_word_in_topic(word, topic_labels, topic):
 	----------
 	word : string
 		This is supposed to be a word from the EVA transcription of the VMS.
+	topic_labels : dict
+		Dictionary where the keys are the folio numbers and the keys are the topic
+		of the page
 	topic: string
-		The topic.
+		The topic to test.
 
 	Returns
 	-------

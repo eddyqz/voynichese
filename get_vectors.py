@@ -13,6 +13,9 @@ import vms_tokenize
 
 Notes:
 
+Based on the file of the same name from https://github.com/viking-sudo-rm/voynich2vec, 
+modified by Chris Yao to be compatible with Python 3.12.3
+
 Word2Vec on Voynich:
 http://blog.christianperone.com/2016/01/voynich-manuscript-word-vectors-and-t-sne-visualization-of-some-patterns/
 
