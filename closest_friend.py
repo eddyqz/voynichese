@@ -87,7 +87,7 @@ color = {
 
 # for language A, B, X (unknown language), and Both for both (purple)
 
-# plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
+plt.scatter(*zip(*image), c = [color[find_language(i, lang_labels)] for i in words], s = 5)
 
 # for language A, B, and X (unknown language)
 # keep in mind that get_word_language.find_language() returns a list, so pick
@@ -183,11 +183,11 @@ visibility = {
 # recall that wc is a global Counter() object from vms_tokenize
 # we can already access the words and their counts using this w, v in vms_tokenize format
 # we want wc as a dict so we can use it in the plt.scatter statement below
-wc_as_dict = {w:v for w, v in vms_tokenize.wc.most_common()}
+# wc_as_dict = {w:v for w, v in vms_tokenize.wc.most_common()}
 # print(wc_as_dict)
 # print(type(wc_as_dict))
 
-plt.scatter(*zip(*image), c = [math.log(wc_as_dict[word]) for word in words], s = 5, cmap = 'Reds', linewidths=1)
+# plt.scatter(*zip(*image), c = [math.log(wc_as_dict[word]) for word in words], s = 5, cmap = 'Reds', linewidths=1)
 
 
 # plt.title('Voynich Word Embeddings')
