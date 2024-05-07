@@ -4,6 +4,9 @@
 # variety of schemes to constuct document vectors: can use counts or tfidf,
 # and can use word vectors or one-hot vectors
 
+# Based on the file doc_vectors.py in https://github.com/viking-sudo-rm/voynich2vec
+# Visualizations at the page/folio level 
+
 import vms_tokenize
 from collections import Counter, defaultdict, OrderedDict
 from math import log, acos
@@ -12,9 +15,8 @@ import numpy as np
 import numpy.linalg as npla
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import fasttext
-import argparse
-import sys
 
 from section_labels import *
 from lang_labels import *
@@ -52,7 +54,6 @@ def annotate(image, words, n=float("inf")):
 		)
 
 path = "models/voynich.bin"
-# path = "models/voynich-3.vec"
 model = fasttext.load_model(path)
 
 term_counts = defaultdict(Counter)
@@ -113,29 +114,48 @@ doc_dist.sort(key = lambda x: x[2])
 tsne = TSNE(n_components=2, metric="cosine", random_state=2)
 image = tsne.fit_transform(vectors)
 
-#annotate(image, pages)
+# annotate(image, pages)
 
-color = {
+# Plotting by topic
+topic_color = {
 	'astro': 'red',
 	'herbal': 'green',
 	'multiherbal': 'lime',
 	'bath': 'cyan',
 	'text': 'grey'
 }
-# plt.scatter(*zip(*image), c = [color[section_labels.get(i, 'X')] for i in pages])
+plt.scatter(*zip(*image), c = [topic_color[section_labels.get(i, 'X')] for i in pages])
+topic_patches = [mpatches.Patch(color = val, label = key) for key,val in topic_color.items()]
+plt.legend(handles = topic_patches)
+plt.title("Distribution of Folios by Topic")
+plt.savefig("images/folios_by_topic.png")
+plt.clf()
 
 
+
+# Plotting by language
 lang_color = {
 	'A': 'red',
 	'B': 'blue',
 	'X': 'grey'
 }
-
 plt.scatter(*zip(*image), c = [lang_color[lang_labels.get(i, 'X')] for i in pages])
+lang_patches = [mpatches.Patch(color = val, label = key) for key,val in lang_color.items()]
+plt.legend(handles = lang_patches)
+plt.title("Distribution of Folios by Language")
+plt.savefig("images/folios_by_lang.png")
+plt.clf()
 
+
+# Comparing this to a random sample of language labels
 random_dialect_sample = get_random_dialect_sample()
 
-# plt.scatter(*zip(*image), c = [color[random_dialect_sample.get(i, 'X')] for i in pages])
+plt.scatter(*zip(*image), c = [lang_color[random_dialect_sample.get(i, 'X')] for i in pages])
+plt.legend(handles = lang_patches)
+plt.title("Distribution of Folios by Language From a Random Sample")
+plt.savefig("images/folios_by_lang_random.png")
+plt.clf()
+
 
 scribe_color = {
 	1: 'red',
@@ -145,8 +165,11 @@ scribe_color = {
 	5: 'purple',
 	"X": "grey"
 }
-# plt.scatter(*zip(*image), c = [scribe_color[scribe_labels.get(i, 'X')] for i in pages])
-
+plt.scatter(*zip(*image), c = [scribe_color[scribe_labels.get(i, 'X')] for i in pages])
+scribe_patches = [mpatches.Patch(color = val, label = key) for key,val in scribe_color.items()]
+plt.legend(handles = scribe_patches)
+plt.title("Distribution of Folios by Scribe")
+plt.savefig("images/folios_by_scribe.png")
 
 plt.show()
 

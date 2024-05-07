@@ -1,4 +1,5 @@
 # Based on closest_friend.py
+# Finds the closest word vector in B to a vector in A, no repeats.
 
 import fasttext
 import numpy as np
@@ -41,7 +42,7 @@ for word in words:
 used_words = []
 closest_a_b_pairs = []
 num_vectors = 40
-# A has fewer words than B 
+# A has fewer words than B, 51 unique to be exact
 all_pairs_and_angles = []
 for a_word in a_words:
 	tmp = [[a_word, b_word, angle_between_vectors(a_word, b_word, model)] for b_word in b_words]
@@ -57,8 +58,9 @@ difference_vectors = [model[a]-model[b] for a,b in closest_a_b_pairs[:num_vector
 difference_vectors = np.array(difference_vectors)
 tsne = TSNE(n_components=2, metric='cosine')
 image = tsne.fit_transform(difference_vectors)
-# plt.scatter(*zip(*image), c="r", marker='.')
-# plt.show()
+plt.scatter(*zip(*image), c="r", marker='.')
+plt.title("Distribution of Difference Vectors A - B Without Repeats")
+plt.savefig("images/difference_vectors_a_b_no_repeats.png")
 
 	
 # not accounting for a and b
@@ -87,4 +89,6 @@ control_difference_vectors = np.array(control_difference_vectors)
 tsne = TSNE(n_components=2, metric='cosine')
 control_image = tsne.fit_transform(control_difference_vectors)
 plt.scatter(*zip(*control_image), c="r", marker='.')
+plt.title("Distribution of Closest Difference Vectors Without Repeats")
+plt.savefig("images/difference_vectors_no_repeats.png")
 plt.show()

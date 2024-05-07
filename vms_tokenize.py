@@ -1,5 +1,5 @@
 # Takahashi Tokenizer
-# by Eli Baum
+# by Eli Baum, taken from https://github.com/viking-sudo-rm/voynich2vec
 
 # TODO:
 # 89r2 paragraph issue

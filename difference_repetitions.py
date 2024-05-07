@@ -1,4 +1,5 @@
 # Based on closest_friend.py
+# Finds the closest word vector in B to a vector in A, repeats included.
 
 import fasttext
 import numpy as np
@@ -52,17 +53,20 @@ tsne = TSNE(n_components=2, metric='cosine')
 image = tsne.fit_transform(difference_vectors)
 
 plt.scatter(*zip(*image), c="r", marker='.')
-plt.show()
+plt.title("Distribution of Difference Vectors A - B With Repeats")
+plt.savefig("images/difference_vectors_a_b.png")
 
 # Control analysis, repetitions included
-# control_closest_a_b_pairs = []
-# control_difference_vectors = []
-# for first, second, _ in word_dist[:num_vectors]:
-#     control_closest_a_b_pairs.append([second, first])
-#     control_difference_vectors.append(model[second] - model[first])
+control_closest_a_b_pairs = []
+control_difference_vectors = []
+for first, second, _ in word_dist[:num_vectors]:
+    control_closest_a_b_pairs.append([second, first])
+    control_difference_vectors.append(model[second] - model[first])
 	
-# control_difference_vectors = np.array(control_difference_vectors)
-# tsne = TSNE(n_components=2, metric='cosine')
-# control_image = tsne.fit_transform(control_difference_vectors)
-# plt.scatter(*zip(*control_image), c="r", marker='.')
-# plt.show()
+control_difference_vectors = np.array(control_difference_vectors)
+tsne = TSNE(n_components=2, metric='cosine')
+control_image = tsne.fit_transform(control_difference_vectors)
+plt.scatter(*zip(*control_image), c="r", marker='.')
+plt.title("Distribution of Closest Difference Vectors With Repeats")
+plt.savefig("images/difference_vectors.png")
+plt.show()
